@@ -1,0 +1,46 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+
+interface PreProcessor
+interface Printer{
++void print(String message);
+}
+interface Renderer{
++PreProcessor getPreProcessor()
+ }
+class PreProcessorToLowerImpl
+class PreProcessorToUpperImpl
+class PrinterWithDateTimeImpl{
+-Renderer
++void print(String message)
+}
+class PrinterWithPrefixImpl{
+-Renderer
++void print(String message)
+}
+class RendererErrImpl{
+-PreProcessor preProcessor
++PreProcessor getPreProcessor()
+}
+class RendererStandardImpl{
+-PreProcessor preProcessor
++PreProcessor getPreProcessor()
+}
+
+PreProcessor<|--  PreProcessorToLowerImpl
+PreProcessor<|--  PreProcessorToUpperImpl
+Printer<|-- PrinterWithDateTimeImpl
+Printer<|-- PrinterWithPrefixImpl
+Renderer<|- RendererErrImpl
+Renderer<|- RendererStandardImpl
+RendererErrImpl *-->   PreProcessor
+RendererErrImpl ..>   PreProcessor
+RendererStandardImpl *-->   PreProcessor
+RendererStandardImpl ..>   PreProcessor
+PrinterWithDateTimeImpl *--> Renderer
+PrinterWithDateTimeImpl ..> Renderer
+PrinterWithPrefixImpl*--> Renderer
+PrinterWithPrefixImpl ..> Renderer
+
+@enduml
